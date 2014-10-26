@@ -1,3 +1,10 @@
+# Verbosity is good, especially if a command fails
+set(CMAKE_VERBOSE_MAKEFILE ON)
+
+list(APPEND CMAKE_MODULE_PATH
+    ${CMAKE_CURRENT_SOURCE_DIR}/cmake
+)
+
 # First for the generic no-config case (e.g. with mingw)
 set( CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/output )
 set( CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/output )
@@ -16,13 +23,9 @@ set(CMAKE_DEBUG_POSTFIX "d")
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 set_property(GLOBAL PROPERTY PREDEFINED_TARGETS_FOLDER "CMakeTargets")
 
-# Verbosity is good, especially if a command fails
-set(CMAKE_VERBOSE_MAKEFILE ON)
-set(TARGET_ARCHITECTURE "x64")
-
 if(CMAKE_COMPILER_IS_GNUCXX)
     # Ensure we use C++ 11 
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
     # Ensure we generate position independent code 
     if("${CMAKE_SYSTEM_PROCESSOR}" STREQUAL "x86_64")
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
@@ -32,7 +35,6 @@ endif()
 
 if(WIN32)
     add_definitions(-DUNICODE -D_UNICODE)
-    set(TARGET_ARCHITECTURE "x86")
 elseif(APPLE)
     # Ensure we use C++ 11 
     set(CMAKE_XCODE_ATTRIBUTE_CLANG_CXX_LANGUAGE_STANDARD "c++0x")
