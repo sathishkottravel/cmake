@@ -34,6 +34,8 @@ if(CMAKE_COMPILER_IS_GNUCXX)
 endif()
 
 if(WIN32)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MP")
+    set(CMAKE_C_FLAGS "${CMAKE_CXX_FLAGS} /MP")
     add_definitions(-DUNICODE -D_UNICODE)
 elseif(APPLE)
     # Ensure we use C++ 11 
