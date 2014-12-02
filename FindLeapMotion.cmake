@@ -4,25 +4,25 @@
 # usage:
 # find_package(PERC ...)
 #
-# searches in LEAP_ROOT and usual locations
+# searches in LeapMotion_ROOT and usual locations
 #
-# Sets LEAP_INCLUDE_DIR, LEAP_LIBRARY_STATIC and LEAP_LIBRARY_DYNAMIC
+# Sets LeapMotion_INCLUDE_DIR, LeapMotion_LIBRARY_STATIC and LeapMotion_LIBRARY_DYNAMIC
 
-set(LEAP_POSSIBLE_PATHS
-    ${LEAP_SDK}
-    $ENV{LEAP_SDK}
+set(LeapMotion_POSSIBLE_PATHS
+    ${LeapMotion_DIR}
+    $ENV{LeapMotion_DIR}
 )
 
-find_path(LEAP_INCLUDE_DIR 
+find_path(LeapMotion_INCLUDE_DIR 
     NAMES Leap.h
     PATH_SUFFIXES "include"
-    PATHS ${LEAP_POSSIBLE_PATHS}
+    PATHS ${LeapMotion_POSSIBLE_PATHS}
 )
 
-find_library(LEAP_LIBRARY
+find_library(LeapMotion_LIBRARY
     NAMES Leap Leapd
     PATH_SUFFIXES "lib/x86"
-    PATHS ${LEAP_POSSIBLE_PATHS}
+    PATHS ${LeapMotion_POSSIBLE_PATHS}
 )
 
 set(CMAKE_FIND_LIBRARY_SUFFIXES_SAVE ${CMAKE_FIND_LIBRARY_SUFFIXES})
@@ -32,10 +32,13 @@ elseif(APPLE)
 else()
     set(CMAKE_FIND_LIBRARY_SUFFIXES ".so")
 endif()
-find_library(LEAP_BINARY
+find_library(LeapMotion_BINARY
     NAMES Leap Leapd
     PATH_SUFFIXES "lib/x86"
-    PATHS ${LEAP_POSSIBLE_PATHS}
+    PATHS ${LeapMotion_POSSIBLE_PATHS}
 )
 set(CMAKE_FIND_LIBRARY_SUFFIXES ${CMAKE_FIND_LIBRARY_SUFFIXES_SAVE})
-find_package_handle_standard_args(LEAP DEFAULT_MSG LEAP_LIBRARY LEAP_INCLUDE_DIR LEAP_BINARY)
+
+find_package_handle_standard_args(LeapMotion 
+    FOUND_VAR LeapMotion_FOUND
+    REQUIRED_VARS LeapMotion_LIBRARY LeapMotion_INCLUDE_DIR LeapMotion_BINARY)
